@@ -1,0 +1,10 @@
+<table>
+    <tr *ngFor="let pd of ser.list">
+        <td (click)="populateForm(pd)">{{pd.CardOwnerName}}</td>
+        <td (click)="populateForm(pd)">{{pd.CardNumber}}</td>
+        <td (click)="populateForm(pd)">{{pd.ExpirationDate}}</td>
+        <td>
+            <i (click)="deletePd(pd.PMId)">Delete</i>
+        </td>
+    </tr>
+</table>
