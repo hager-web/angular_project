@@ -2,71 +2,72 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
 import { ToastrService } from 'ngx-toastr';
+import { PaymentDetail } from 'src/app/shared/payment-detail.model';
 
 @Component({
   selector: 'app-payment-detail',
   templateUrl: './payment-detail.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PaymentDetailComponent implements OnInit {
-  serv:PaymentDetailService;
-  
-  constructor(private service:PaymentDetailService,private toastr: ToastrService) { 
-    this.serv=service;
-    
-  }
+  formData: PaymentDetail;
+
+  constructor(
+    private service: PaymentDetailService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.resetForm();
-
+    this.formData = this.service.formData;
+    debugger;
   }
-  resetForm(form?:NgForm){
-    if(form != null)
-      form.resetForm();
-    this.service.formData={
-      PMId:0,
+  resetForm(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.service.formData = {
+      PMId: 0,
       CardOwnerName: '',
-      CardNumber:'',
-      ExpirationDate:'',
-      CVV:''
-    }
+      CardNumber: '',
+      ExpirationDate: '',
+      CVV: '',
+    };
   }
-  onSubmit(form:NgForm){
-    if(this.service.formData.PMId==0){
+  onSubmit(form: NgForm) {
+    if (this.service.formData.PMId == 0) {
       this.insertRecord(form);
-    }else{
+    } else {
       this.updateRecord(form);
     }
-    
-
   }
-  insertRecord(form:NgForm){
+  insertRecord(form: NgForm) {
     this.service.postPaymentDetail().subscribe(
-      res=>{
+      (res) => {
         this.resetForm(form);
-        this.toastr.success('Submittedd Successfully', 'Payment Detail Registration!');
+        this.toastr.success(
+          'Submittedd Successfully',
+          'Payment Detail Registration!'
+        );
         this.service.refreshList();
       },
-      err =>{
+      (err) => {
         console.log(err);
-
       }
     );
   }
-  updateRecord(form:NgForm){
+  updateRecord(form: NgForm) {
     this.service.putPaymentDetail().subscribe(
-      res=>{
+      (res) => {
         this.resetForm(form);
-        this.toastr.success('Submittedd Successfully', 'Payment Detail Registration!');
+        this.toastr.success(
+          'Submittedd Successfully',
+          'Payment Detail Registration!'
+        );
 
         this.service.refreshList();
       },
-      err =>{
+      (err) => {
         console.log(err);
-
       }
     );
   }
-
 }
