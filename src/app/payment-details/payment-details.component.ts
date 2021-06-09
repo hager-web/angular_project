@@ -3,14 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-payment-details',
   templateUrl: './payment-details.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PaymentDetailsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

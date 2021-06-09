@@ -6,33 +6,36 @@ import { PaymentDetailService } from 'src/app/shared/payment-detail.service';
 @Component({
   selector: 'app-payment-detail-list',
   templateUrl: './payment-detail-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PaymentDetailListComponent implements OnInit {
-ser:PaymentDetailService;
-  constructor( private service:PaymentDetailService,private toaster:ToastrService) { 
+  ser: PaymentDetailService;
+  constructor(
+    private service: PaymentDetailService,
+    private toaster: ToastrService
+  ) {
     this.ser = service;
   }
 
   ngOnInit(): void {
     this.service.refreshList();
   }
-  populateForm(pd:PaymentDetail){
-    this.service.formData=Object.assign({},pd);
-    
+  populateForm(pd: PaymentDetail) {
+    this.service.formData = Object.assign({}, pd);
   }
-  deletePd(PMId){
-    if(confirm("Are you sure to delete?"))
-    this.service.deletePaymentDetail(PMId).subscribe(
-      res=>{
-        this.service.refreshList();
-        this.toaster.warning("Deleted Successfully","Payment Detail Registration!")
-      },
-      err=>{
-        console.log(err);
-      }
-    );
+  deletePd(PMId) {
+    if (confirm('Are you sure to delete?'))
+      this.service.deletePaymentDetail(PMId).subscribe(
+        (res) => {
+          this.service.refreshList();
+          this.toaster.warning(
+            'Deleted Successfully',
+            'Payment Detail Registration!'
+          );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
-
 }
